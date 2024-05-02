@@ -81,6 +81,7 @@ for i in V:
     for j in V:
         for v in Car:
             mdl.capacity_constraints.add(capacity_constraints_rule(mdl, i, j, v))
+            
 
 # Constraint 4 - Lower bound for vehicle capacity constraint
 mdl.capacity_flow_lower_constraints = ConstraintList()
@@ -100,6 +101,8 @@ for i in V:
     for v in Car:
         mdl.capacity_flow_upper_constraints.add(capacity_flow_upper_constraints_rule(mdl, i, v))
 
+
+# Solve the Model
 solver = SolverFactory('cbc', executable='/opt/homebrew/opt/cbc/bin/cbc')
 results = solver.solve(mdl)
 
@@ -107,8 +110,6 @@ start_points = find_start_points(mdl,V, Car)
 route_details = find_route_path(N, V, start_points, mdl, c, customer, vehicle)
 
 print(show_result(route_details))
-
-# Solve the Model
 
 if __name__ == "main":
     print("Model is solving")
